@@ -42,6 +42,9 @@ This displays the different places that are checked for the executable when cat 
 We can change this by calling:
 - export PATH=~/newFunctions:PATH$
 
+***Now we want to add a malicious version of cat.c so when we add it to the PATH it will find ours first and execute the malicious 
+package!***
+
 This essentially adds our folder of altered functions to the path to be checked and then we add the original $PATH so we don't have to write 
 every single fucntion.
 Now we can have our new version call:
