@@ -2,9 +2,9 @@
 A demo on how you can manipulate PATH to run malicious versions of syscalls.
 
 ## Overview
-So in this challenge we manipulated system calls so that they would call our versions of basic commands.
+Manipulation of system calls so that they would reference our versions of basic commands.
 We did this with cat, less, and signal.
-Further explanation is in the sub folders.
+Further explanation below.
 
 ## Storyline
 
@@ -30,7 +30,7 @@ If you want to follow along, I suggest doing this on a virtual machine, and save
 In addition, you should make a folder that is named very specifically so that you can change the PATH to point at that folder. I will 
 explain this later.
 
-### Prog1: 
+### Prog1 (cat.c): 
 In prog1 we see that the sole call is just a 
 - system("cat ...");
 
@@ -42,23 +42,23 @@ This displays the different places that are checked for the executable when cat 
 We can change this by calling:
 - export PATH=~/newFunctions:PATH$
 
-***Now we want to add a malicious version of cat.c so when we add it to the PATH it will find ours first and execute the malicious 
-package!***
+***Now we want to add a malicious version of cat.c to the directory newFunctions so when we add it to the PATH it will find ours first and 
+execute the malicious version!***
 
 This essentially adds our folder of altered functions to the path to be checked and then we add the original $PATH so we don't have to write 
-every single fucntion.
+every single function.
 Now we can have our new version call:
-- system("/bin/grade");
+- system("/bin/grade"); *guid enabled*
 
-### Prog3:
-Similar process as before with prog1, except now we have to read the function. You can see that it only uses a system call in the case that 
-it can't open all 4 files. The way of fixing this is typing:
+### Prog3 (less.c):
+Similar process as before with prog1, except now we have to read the function more carefully. You can see that it only uses a system call in 
+the case that it can't open all 4 files. The way of fixing this is typing:
 - ulimit -n 5
 
 This will limit the processes to only 5 and not leave enough for the files to all open, now we can trigger the vulnerable system call 
 like last time.
 
-### Prog2:
+### Prog2 (signal.c):
 Hardest of all (and kind of a shit show).
 By reading the source code we see that a system call only occurs when it is given a signal alarm.
 To do this, we have to kill the process while it's running.
