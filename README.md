@@ -32,25 +32,25 @@ explain this later.
 
 ### Prog1: 
 In prog1 we see that the sole call is just a 
-system("cat ...");
+- system("cat ...");
 
 Because of this we know we can maniuplate a system call by modifying the PATH. 
 To find the environment settings,  type:
-printenv
+- printenv
 
 This displays the different places that are checked for the executable when cat is called. 
 We can change this by calling:
-export PATH=~/newFunctions:PATH$
+- export PATH=~/newFunctions:PATH$
 
 This essentially adds our folder of altered functions to the path to be checked and then we add the original $PATH so we don't have to write 
 every single fucntion.
 Now we can have our new version call:
-system("/bin/grade");
+- system("/bin/grade");
 
 ### Prog3:
 Similar process as before with prog1, except now we have to read the function. You can see that it only uses a system call in the case that 
 it can't open all 4 files. The way of fixing this is typing:
-ulimit -n 5
+- ulimit -n 5
 
 This will limit the processes to only 5 and not leave enough for the files to all open, now we can trigger the vulnerable system call 
 like last time.
@@ -66,4 +66,4 @@ SIGALRM is code 14 (which is specified in the code) and can be found on WikiPedi
 I initially tried setting SHELL to my directory the same way as before for PATH because the system call is for echo, which is a built-in 
 command.
 This didn't work even though I think it shouldve. In the end, this is the line that worked:
-exec -a "&& /bin/grade" prog2 1000 & pkill -14 prog2
+- exec -a "&& /bin/grade" prog2 1000 & pkill -14 prog2
